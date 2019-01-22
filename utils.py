@@ -1,5 +1,6 @@
 import json
 import psycopg2
+from typing import List
 
 
 class Settings(object):
@@ -17,12 +18,13 @@ class Settings(object):
         return self.settings[name]
 
 
-def get_chats(settings: Settings):
+def get_chats(settings: Settings) -> List[int]:
     """Get list of users' Telegram ids from db."""
     users = []
-    with psycopg2.connect(settings.database.uri) as conn:
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT chat_id FROM users WHERE active = TRUE")
-            for user in cursor.fetchall():
-                users.append(user[0])
+    # with psycopg2.connect(settings.database.uri) as conn:
+    #     with conn.cursor() as cursor:
+    #         cursor.execute("SELECT chat_id FROM users WHERE active = TRUE")
+    #         for user in cursor.fetchall():
+    #             users.append(user[0])
+    return [83663576]
     return users

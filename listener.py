@@ -12,7 +12,7 @@ import logging
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 settings = Settings()
-CHATS = []
+CHATS = get_chats(settings)
 
 
 client = TelegramClient(
@@ -23,22 +23,21 @@ client = TelegramClient(
 
 
 @client.on(events.userupdate.UserUpdate(chats=CHATS))
-def user_update(event):
+async def user_update(event):
     if not isinstance(event.online, bool):
         # no status info
         return
     if event.online:
         # online user
-        # id: event.chat.id
-        pass
+        # id: event.user_id
+        logger.info("{} is online".format(event.user_id))
     elif event.last_seen:
         # offline user
-        # id: event.chat.id
+        # id: event.user_id
         # last_seen: datetime
-        pass
+        logger.info("{} is offline".format(event.user_id))
 
 
 if __name__ == '__main__':
-    CHATS = get_chats(settings)
     client.start()
     client.run_until_disconnected()
