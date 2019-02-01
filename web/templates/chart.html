@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block jumbotron %}{% endblock %}
+{% block title %}Graphic Charts{% endblock %}
+{% block main_content_class %}clean-page{% endblock %}
+
+{% block content %}
+    <div id="container" style=""></div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modules/exporting.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modules/export-data.js') }}"></script>
+<script type="text/javascript">
+Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Telesherlock'
+    },
+    subtitle: {
+        text: 'Source: http://127.0.0.1:5000'
+    },
+    xAxis: {
+        categories: ['Pazartesi','Sali','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar']
+    },
+    yAxis: {
+        title: {
+            text: 'Saatler'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Aybuke',
+        data: {{ aybuke_online }}
+    }, {
+        name: 'Halil',
+        data: {{ halil_online }}
+    }]
+});
+</script>
+{% endblock %}

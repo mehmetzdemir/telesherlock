@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="x-UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Ana Sayfa</title>
-</head>
-<br><h3>ILK WEB SAYFASI</h3>
-sayi : {{number}}<br>
-sayi2 : {{number2}}</br>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block meta_description %}Eye of Telegram Activity :D{% endblock %}
+{% block title %}TeleSherlock{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      <div class="col-md-5">
+        <h2>AYBUKE</h2>
+        <p>.. </p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-5">
+        <h2>HALIL</h2>
+        <p>.. </p>
+        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+      </div>
+    </div>
+    <hr>
+</div> <!-- /container -->
+{% endblock %}
