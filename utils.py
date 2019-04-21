@@ -107,7 +107,9 @@ def populate_dummy_history(settings: Settings, date_range: int = 7) -> None:
     users = get_users(settings)
     for user in users:
         for i in range(date_range):
-            online_at = now - timedelta(days=i)
-            duration = randint(1, 120)
-            offline_at = online_at + timedelta(seconds=duration)
-            save_activity(settings, user['user_id'], duration, online_at, offline_at)
+            online_start = (now - timedelta(days=i)).replace(hour=12)
+            for delay in range(0, 101, 20):
+                online_at = online_start + timedelta(seconds=delay)
+                duration = randint(1, 120)
+                offline_at = online_at + timedelta(seconds=duration)
+                save_activity(settings, user['user_id'], duration, online_at, offline_at)
