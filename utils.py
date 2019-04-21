@@ -101,7 +101,6 @@ def get_users(settings: Settings) -> List[dict]:
     return users
 
 
-# noinspection SqlNoDataSourceInspection
 def populate_dummy_history(settings: Settings, date_range: int = 7) -> None:
     now = datetime.now()
     users = get_users(settings)
@@ -113,3 +112,19 @@ def populate_dummy_history(settings: Settings, date_range: int = 7) -> None:
                 duration = randint(1, 120)
                 offline_at = online_at + timedelta(seconds=duration)
                 save_activity(settings, user['user_id'], duration, online_at, offline_at)
+
+
+# noinspection SqlNoDataSourceInspection
+def save_user(settings: Settings, chat_id: int, username: str, email: str) -> bool:
+    with psycopg2.connect(settings.database.uri) as conn:
+        with conn.cursor() as cursor:
+            try:
+                cursor.execute(
+                    "INSERT INTO users (chat_id, username, email)"
+                    "VALUES (%(chat_id)s, %(username)s, %(email)s);",
+                    {'chat_id': chat_id, 'username': username, 'email': email}
+                )
+                conn.commit()
+            except psycopg2.IntegrityError:
+                return False
+            return True
