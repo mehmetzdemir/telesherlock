@@ -20,14 +20,14 @@ Highcharts.chart('container', {
         text: 'Telesherlock'
     },
     subtitle: {
-        text: 'Source: http://127.0.0.1:5000'
+        text: 'Telegram activity'
     },
     xAxis: {
-        categories: ['Pazartesi','Sali','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar']
+        categories: [{% for date in date_range %}'{{ date }}', {% endfor %}]
     },
     yAxis: {
         title: {
-            text: 'Saatler'
+            text: 'Seconds'
         }
     },
     plotOptions: {
@@ -38,13 +38,14 @@ Highcharts.chart('container', {
             enableMouseTracking: false
         }
     },
-    series: [{
-        name: 'Aybuke',
-        data: {{ aybuke_online }}
-    }, {
-        name: 'Halil',
-        data: {{ halil_online }}
-    }]
+    series: [
+        {% for user, history in chart_series.items() %}
+        {
+            'name': '{{ user }}',
+            'data': {{ history }}
+        }{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    ]
 });
 </script>
 {% endblock %}
