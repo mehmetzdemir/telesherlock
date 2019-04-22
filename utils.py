@@ -78,20 +78,23 @@ def db_setup(settings: Settings) -> None:
                     online_at timestamp without time zone not null,
                     offline_at timestamp without time zone not null,
                     duration float not null
-                    
+
                 );"""
             )
             conn.commit()
 
 
 # noinspection SqlNoDataSourceInspection
-def get_users(settings: Settings) -> List[dict]:
+def get_users(settings: Settings, username: str = None) -> List[dict]:
     users = []
+    data = {}
     with psycopg2.connect(settings.database.uri) as conn:
         with conn.cursor() as cursor:
-            cursor.execute(
-                "SELECT chat_id, username, email FROM users;"
-            )
+            sql = "SELECT chat_id, username, email FROM users"
+            if username:
+                sql += " WHERE username = %(username)s"
+                data = {'username': username}
+            cursor.execute(sql, data)
             for user in cursor.fetchall():
                 users.append({
                     'username': user[1],
@@ -101,9 +104,9 @@ def get_users(settings: Settings) -> List[dict]:
     return users
 
 
-def populate_dummy_history(settings: Settings, date_range: int = 7) -> None:
+def populate_dummy_history(settings: Settings, date_range: int = 7, username:str = None) -> None:
     now = datetime.now()
-    users = get_users(settings)
+    users = get_users(settings, username=username)
     for user in users:
         for i in range(date_range):
             online_start = (now - timedelta(days=i)).replace(hour=12)

@@ -30,7 +30,7 @@ if __name__ == '__main__':
     if args.command == 'setup_db':
         db_setup(settings)
     elif args.command == 'populate_data':
-        populate_dummy_history(settings, date_range=args.range)
+        populate_dummy_history(settings, date_range=args.range, username=args.username)
     elif args.command == 'add_user':
         if not args.chat_id:
             print("Please, provide chat_id for the user!")
