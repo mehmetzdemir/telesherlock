@@ -1,6 +1,7 @@
 import json
 import psycopg2
 from datetime import datetime, timedelta
+from typing import List
 
 
 class Settings(object):
@@ -38,3 +39,19 @@ def get_activities(settings: Settings, active_from: datetime = None):
                     {'user': activity[0], 'duration': activity[2]}
                 )
     return activity_data
+
+
+# noinspection SqlNoDataSourceInspection
+def get_users(settings: Settings) -> List[dict]:
+    users = []
+    with psycopg2.connect(settings.database.uri) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT username, email FROM users;"
+            )
+            for user in cursor.fetchall():
+                users.append({
+                    'username': user[0],
+                    'email': user[1]
+                })
+    return users

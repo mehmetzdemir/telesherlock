@@ -21,12 +21,12 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="{{ url_for('users_view') }}">Users</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">İçindekiler</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="{{ url_for('charts') }}">Grafik</a>
+          <a class="dropdown-item" href="{{ url_for('charts_view') }}">Grafik</a>
           <a class="dropdown-item" href="#">Donut</a>
         </div>
       </li>

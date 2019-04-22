@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block jumbotron %}{% endblock %}
+{% block title %}Users{% endblock %}
+{% block main_content_class %}clean-page{% endblock %}
+
+{% block content %}
+<div id="container">
+    <div class="row m-1">
+        {% for user in users %}
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+              <img src="{{ user.email | gravatar }}" class="card-img-top" alt="{{ user.username }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ user.username[0]|upper }}{{ user.username[1:] }}</h5>
+                <a href="#" class="btn btn-primary">View Activity</a>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="clean-page"></div>
+{% endblock %}
